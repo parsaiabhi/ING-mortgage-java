@@ -12,8 +12,6 @@ import com.mortgage.ing.entity.Customer;
 import com.mortgage.ing.entity.Emi;
 import com.mortgage.ing.entity.Mortgage;
 import com.mortgage.ing.entity.Transaction;
-import com.mortgage.ing.exception.IngMortgageException;
-import com.mortgage.ing.exception.InvalidCredentialsException;
 import com.mortgage.ing.repository.AccountRepository;
 import com.mortgage.ing.repository.CustomerRepository;
 import com.mortgage.ing.repository.EmiRepository;
@@ -67,13 +65,19 @@ public class SchedulerServiceImpl implements SchedulerService {
 			Account account = accountRepository.findByCustomerId(customerId);
 			log.info("inside account={}", account.getAccountNo());
 			Mortgage mortgage = mortgageRepository.findByCustomerId(customerId);
+			log.info("inside morgage ={}", mortgage.getMortgagaeId());
 			Emi emi = emiRepository.findByMortgageId(mortgage.getMortgagaeId());
+
+			log.info("inside morgage ={}", emi.getEmiId());
 			Optional<Customer> customer = customerRepository.findByCustomerId(customerId);
+			Float tenure = emi.getTerm() * 12;
 
 			if (account.getBalance() > emi.getEmiAmount()) {
-				if (mortgage.getOutstandingBalance() >= 0) {
-					Float tenure = emi.getTerm() * 12;
+				log.info("inside 1st if  ={}", emi.getEmiAmount());
+				if ((mortgage.getOutstandingBalance() - emi.getEmiAmount()) >= 0) {
+					log.info("inside get term ={}", emi.getTerm());
 
+					log.info("inside 2nd if ={}", mortgage.getOutstandingBalance() - emi.getEmiAmount());
 					mortgage.setOutstandingBalance(mortgage.getOutstandingBalance() - emi.getEmiAmount());
 					mortgageRepository.save(mortgage);
 
@@ -97,13 +101,17 @@ public class SchedulerServiceImpl implements SchedulerService {
 					accountTransaction.setTransactionType("DEBITED");
 
 					txnRepository.save(accountTransaction);
-					tenure--;
-					if (tenure >= 3) {
+					Float res = tenure--;
+					log.info("tenure={}", tenure);
+					if (tenure <= 3) {
+
 						mailService.sendEmail(customer.get().getEmailId(),
 								" this is your last" + tenure + " month emi");
 					}
+
 				}
 			}
+
 		});
 
 		log.info("SchedulerServiceImpl :: runTask - END");
