@@ -18,12 +18,12 @@ public class TransactionController {
 
 	@Autowired
 	private TransactionService transactionService;
-	
-	@GetMapping(value = "/accounts/{accountNo}/transactions" ,produces = "application/json")
-	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo")Integer accountNo) throws NoAccountFoundException{
-		return new ResponseEntity<List<TransactionResponseDto>>(transactionService.getTransactionByAccountNo(accountNo),HttpStatus.OK);
+
+	@GetMapping(value = "/accounts/{accountNo}/transactions", produces = "application/json")
+	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo") Integer accountNo)
+			throws NoAccountFoundException {
+		return new ResponseEntity<List<TransactionResponseDto>>(transactionService.getTransactionByAccountNo(accountNo),
+				HttpStatus.OK);
 	}
-	
-	
-	
+
 }

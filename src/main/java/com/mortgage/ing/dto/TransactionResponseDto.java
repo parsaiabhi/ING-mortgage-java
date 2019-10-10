@@ -9,53 +9,65 @@ public class TransactionResponseDto {
 	private LocalDate transactiondate;
 	private Double transactionAmount;
 	private String description;
-	private Double accountNo;
+	private Integer accountNo;
+
 	public Integer getTransactionId() {
 		return transactionId;
 	}
+
 	public void setTransactionId(Integer transactionId) {
 		this.transactionId = transactionId;
 	}
+
 	public String getTransactionType() {
 		return transactionType;
 	}
+
 	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
+
 	public LocalDate getTransactiondate() {
 		return transactiondate;
 	}
+
 	public void setTransactiondate(LocalDate transactiondate) {
 		this.transactiondate = transactiondate;
 	}
+
 	public Double getTransactionAmount() {
 		return transactionAmount;
 	}
+
 	public void setTransactionAmount(Double transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public Double getAccountNo() {
+
+	public Integer getAccountNo() {
 		return accountNo;
 	}
-	public void setAccountNo(Double accountNo) {
+
+	public void setAccountNo(Integer accountNo) {
 		this.accountNo = accountNo;
 	}
+
 	@Override
 	public String toString() {
 		return "TransactionResponseDto [transactionId=" + transactionId + ", transactionType=" + transactionType
 				+ ", transactiondate=" + transactiondate + ", transactionAmount=" + transactionAmount + ", description="
 				+ description + ", accountNo=" + accountNo + "]";
 	}
-	
+
 	public TransactionResponseDto(Integer transactionId, String transactionType, LocalDate transactiondate,
-			Double transactionAmount, String description, Double accountNo) {
+			Double transactionAmount, String description, Integer accountNo) {
 		super();
 		this.transactionId = transactionId;
 		this.transactionType = transactionType;
@@ -64,11 +76,9 @@ public class TransactionResponseDto {
 		this.description = description;
 		this.accountNo = accountNo;
 	}
+
 	public TransactionResponseDto() {
 		super();
 	}
-	
-	
-	
-	
+
 }
