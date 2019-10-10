@@ -43,27 +43,6 @@ public class TransactionServiceImpl implements TransactionService {
 				  }).collect(Collectors.toList());
 				  
 				  
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*List<TransactionResponseDto> responseTransactionDto = new ArrayList<>();
-		for (Transaction t : transactionList) {
-			TransactionResponseDto transactionResponseDto = new TransactionResponseDto();
-
-			BeanUtils.copyProperties(t, transactionResponseDto);
-
-			responseTransactionDto.add(transactionResponseDto);
-
-		}*/
 		log.debug("dto conversion done {}",transactionResponseDto);
 		return transactionResponseDto;
 	}
