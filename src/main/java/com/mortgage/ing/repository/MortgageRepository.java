@@ -7,4 +7,6 @@ import com.mortgage.ing.entity.Mortgage;
 @Repository
 public interface MortgageRepository extends JpaRepository<Mortgage, Integer>{
 
+	Mortgage findByCustomerId(Integer customerId);
+
 }
