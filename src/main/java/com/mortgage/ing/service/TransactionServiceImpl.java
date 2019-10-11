@@ -6,8 +6,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mortgage.ing.dto.TransactionResponseDto;
@@ -19,7 +17,6 @@ import com.mortgage.ing.exception.NoAccountFoundException;
 import com.mortgage.ing.repository.AccountRepository;
 import com.mortgage.ing.repository.MortgageRepository;
 import com.mortgage.ing.repository.TransactionRepository;
-import com.mortgage.ing.util.paginationUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
