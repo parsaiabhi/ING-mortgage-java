@@ -1,12 +1,16 @@
 package com.mortgage.ing.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.mortgage.ing.dto.ResponseDto;
+import com.mortgage.ing.entity.Mortgage;
 import com.mortgage.ing.service.CustomerService;
 import com.mortgage.ing.service.MortgageService;
 import com.mortgage.ing.util.IngMortgageConstants;
@@ -34,6 +38,22 @@ public class MortgageController {
 			return new ResponseEntity<>(responseDto, HttpStatus.OK);
 		}
 	}	
+	
+	
+	@GetMapping(value = "/customers/{customerId}/mortgages", produces = "application/json")
+	public ResponseEntity<Mortgage> getMortgageDetailsByCustId(@PathVariable("customerId")Integer customerId){
+		Optional<Mortgage> mortgageDetailsByCustomerId = mortgageService.getMortgageDetailsByCustomerId(customerId);
+		
+		Mortgage mortgage = null;
+		if(mortgageDetailsByCustomerId.isPresent()) {
+			 mortgage = mortgageDetailsByCustomerId.get();
+		}
+		return new ResponseEntity<Mortgage>(mortgage,HttpStatus.OK);
+		
+	}
+	
+	
+	
 	
 	
 

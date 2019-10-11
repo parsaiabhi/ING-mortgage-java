@@ -10,34 +10,46 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="mortgage")
+@Table(name = "mortgage")
 public class Mortgage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="mortgage_id")
+	@Column(name = "mortgage_id")
 	private Integer mortgagaeId;
-	@Column(name="mortgage_account_no")
+	@Column(name = "mortgage_account_no")
 	private Long mortgageAccountNo;
-	@Column(name="mortgage_loan_amount")
+	@Column(name = "mortgage_loan_amount")
 	private Double mortgageLoanAmount;
-	@Column(name="property_name")
+	@Column(name = "property_name")
 	private String propertyName;
-	@Column(name="property_type")
+	@Column(name = "property_type")
 	private String propertyType;
-	@Column(name="property_value")
+	@Column(name = "property_value")
 	private Double propertyValue;
-	@Column(name="mortgage_status")
+	@Column(name = "mortgage_status")
 	private String mortgageStatus;
-	@Column(name="outstanding_balance")
+	@Column(name = "outstanding_balance")
 	private Double outstandingBalance;
-	@Column(name="deposit_amount")
+	@Column(name = "deposit_amount")
 	private Double depositAmount;
-	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customer customer;
-	
+
+	private Integer customerId;
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name="customer_id") private Customer customer;
+	 */
+
 	public Mortgage() {
 		super();
+	}
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 
 	public Integer getMortgagaeId() {
@@ -112,26 +124,18 @@ public class Mortgage {
 		this.depositAmount = depositAmount;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	@Override
 	public String toString() {
 		return "Mortgage [mortgagaeId=" + mortgagaeId + ", mortgageAccountNo=" + mortgageAccountNo
 				+ ", mortgageLoanAmount=" + mortgageLoanAmount + ", propertyName=" + propertyName + ", propertyType="
 				+ propertyType + ", propertyValue=" + propertyValue + ", mortgageStatus=" + mortgageStatus
-				+ ", outstandingBalance=" + outstandingBalance + ", depositAmount=" + depositAmount + ", customer="
-				+ customer + "]";
+				+ ", outstandingBalance=" + outstandingBalance + ", depositAmount=" + depositAmount + ", customerId="
+				+ customerId + "]";
 	}
 
 	public Mortgage(Integer mortgagaeId, Long mortgageAccountNo, Double mortgageLoanAmount, String propertyName,
 			String propertyType, Double propertyValue, String mortgageStatus, Double outstandingBalance,
-			Double depositAmount, Customer customer) {
+			Double depositAmount, Integer customerId) {
 		super();
 		this.mortgagaeId = mortgagaeId;
 		this.mortgageAccountNo = mortgageAccountNo;
@@ -142,8 +146,7 @@ public class Mortgage {
 		this.mortgageStatus = mortgageStatus;
 		this.outstandingBalance = outstandingBalance;
 		this.depositAmount = depositAmount;
-		this.customer = customer;
+		this.customerId = customerId;
 	}
-	
-	
+
 }

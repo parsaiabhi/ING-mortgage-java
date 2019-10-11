@@ -44,7 +44,7 @@ public class TransactionControllerTest {
 
 		Transaction transaction = new Transaction();
 
-		transaction.setAccountNo(111);
+		transaction.setAccountNo(111l);
 		transaction.setDescription("emi for loan");
 		transaction.setTransactionAmount(10000d);
 		transaction.setTransactiondate(LocalDate.now());
@@ -53,7 +53,7 @@ public class TransactionControllerTest {
 
 		Transaction transaction2 = new Transaction();
 
-		transaction2.setAccountNo(111);
+		transaction2.setAccountNo(111l);
 		transaction2.setDescription("emi for loan");
 		transaction2.setTransactionAmount(20000d);
 		transaction2.setTransactiondate(LocalDate.now());
@@ -66,7 +66,7 @@ public class TransactionControllerTest {
 		transactionList.add(transaction2);
 
 		TransactionResponseDto transactionResponseDto = new TransactionResponseDto();
-		transactionResponseDto.setAccountNo(111d);
+		transactionResponseDto.setAccountNo(111l);
 		transactionResponseDto.setDescription("emi for loan");
 		transactionResponseDto.setTransactionAmount(10000d);
 		transactionResponseDto.setTransactiondate(LocalDate.now());
@@ -74,7 +74,7 @@ public class TransactionControllerTest {
 		transactionResponseDto.setTransactionType("debited");
 
 		TransactionResponseDto transactionResponseDto1 = new TransactionResponseDto();
-		transactionResponseDto1.setAccountNo(111d);
+		transactionResponseDto1.setAccountNo(111l);
 		transactionResponseDto1.setDescription("emi for loan");
 		transactionResponseDto1.setTransactionAmount(10000d);
 		transactionResponseDto1.setTransactiondate(LocalDate.now());
@@ -85,7 +85,7 @@ public class TransactionControllerTest {
 		transactionResponseDtoList.add(transactionResponseDto);
 		transactionResponseDtoList.add(transactionResponseDto1);
 
-		Mockito.when(transactionServiceImpl.getTransactionByAccountNo(111)).thenReturn(transactionResponseDtoList);
+		Mockito.when(transactionServiceImpl.getTransactionByAccountNo(111l)).thenReturn(transactionResponseDtoList);
 		mockMvc.perform(MockMvcRequestBuilders.get("/accounts/111/transactions"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 

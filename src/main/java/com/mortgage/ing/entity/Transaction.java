@@ -27,7 +27,7 @@ public class Transaction {
 	private LocalDate transactiondate;
 	private Double transactionAmount;
 	private String description;
-	private Integer accountNo;
+	private Long accountNo;
 
 	public Integer getTransactionId() {
 		return transactionId;
@@ -69,11 +69,11 @@ public class Transaction {
 		this.description = description;
 	}
 
-	public Integer getAccountNo() {
+	public Long getAccountNo() {
 		return accountNo;
 	}
 
-	public void setAccountNo(Integer accountNo) {
+	public void setAccountNo(Long accountNo) {
 		this.accountNo = accountNo;
 	}
 
@@ -85,7 +85,7 @@ public class Transaction {
 	}
 
 	public Transaction(Integer transactionId, String transactionType, LocalDate transactiondate,
-			Double transactionAmount, String description, Integer accountNo) {
+			Double transactionAmount, String description, Long accountNo) {
 		super();
 		this.transactionId = transactionId;
 		this.transactionType = transactionType;

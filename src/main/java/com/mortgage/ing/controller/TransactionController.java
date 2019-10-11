@@ -20,7 +20,7 @@ public class TransactionController {
 	private TransactionService transactionService;
 
 	@GetMapping(value = "/accounts/{accountNo}/transactions", produces = "application/json")
-	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo") Integer accountNo)
+	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo") Long accountNo)
 			throws NoAccountFoundException {
 		return new ResponseEntity<List<TransactionResponseDto>>(transactionService.getTransactionByAccountNo(accountNo),
 				HttpStatus.OK);
