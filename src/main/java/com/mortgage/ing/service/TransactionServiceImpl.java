@@ -6,6 +6,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mortgage.ing.dto.TransactionResponseDto;
@@ -17,6 +19,7 @@ import com.mortgage.ing.exception.NoAccountFoundException;
 import com.mortgage.ing.repository.AccountRepository;
 import com.mortgage.ing.repository.MortgageRepository;
 import com.mortgage.ing.repository.TransactionRepository;
+import com.mortgage.ing.util.paginationUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,22 +39,28 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public List<TransactionResponseDto> getTransactionByAccountNo(Long accountNo)throws NoAccountFoundException{
 		
+		log.info("getting account no{}",accountNo);
 		Optional<Account> findById = accountRepository.findById(accountNo);
-		Customer customer = new Customer();
 		
+		log.info("getting account details{}",findById.get());
+		
+//		Customer customer = null;
+		Integer cid = 0;
 		  if(findById.isPresent()) {
 			  Account account = findById.get();
-			  customer = account.getCustomer();
-			  
+			  Customer customer = account.getCustomer();
+			  cid = customer.getCustomerId();
 		  }else {
 			  throw new NoAccountFoundException("no account with accounNo " +accountNo);
 		  }
 		  
-		  Integer cid = customer.getCustomerId();
+//		  Integer cid = customer.getCustomerId();
 		  
 		
 
 		log.debug("customer id is{}", cid);
+		
+		
 		
 		List<Transaction> transactionList = transactionRepository.findTransactionByAccountNo(accountNo);
 		
@@ -67,7 +76,7 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 		
 		
-		Long man = mortgage.getMortgageAccountNo();
+		Long mortgageAccountNo = mortgage.getMortgageAccountNo();
 		
 	
 		
@@ -80,7 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
 					  	
 					@Override
 					public TransactionResponseDto apply(Transaction transaction) {
-						 return new TransactionResponseDto(transaction.getTransactionId(),transaction.getTransactionType(),transaction.getTransactiondate(),transaction.getTransactionAmount(),transaction.getDescription(),transaction.getAccountNo(),man);}
+						 return new TransactionResponseDto(transaction.getTransactionId(),transaction.getTransactionType(),transaction.getTransactiondate(),transaction.getTransactionAmount(),transaction.getDescription(),transaction.getAccountNo(),mortgageAccountNo);}
 				  }).collect(Collectors.toList());
 				  
 		log.debug("dto conversion done {}",transactionResponseDto);
