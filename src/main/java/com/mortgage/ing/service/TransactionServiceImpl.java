@@ -20,77 +20,81 @@ import com.mortgage.ing.repository.TransactionRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Abhishek
+ *
+ */
 @Service
 @Slf4j
 public class TransactionServiceImpl implements TransactionService {
 
+	/***
+	 * this transactionRepository will get transaction list based on customeAccNo
+	 */
 	@Autowired
 	private TransactionRepository transactionRepository;
-	
+	/***
+	 * this mortgageRepository will get mortgage details based on customerId we will
+	 * get customerId from accountRepository
+	 */
+
 	@Autowired
 	private MortgageRepository mortgageRepository;
-	
+
+	/***
+	 * this accountRepository will get account details based on customerAccNo
+	 */
 	@Autowired
 	AccountRepository accountRepository;
 
 	@Override
-	public List<TransactionResponseDto> getTransactionByAccountNo(Long accountNo)throws NoAccountFoundException{
-		
-		log.info("getting account no{}",accountNo);
+	public List<TransactionResponseDto> getTransactionByAccountNo(Long accountNo) throws NoAccountFoundException {
+
+		log.info("getting account no{}", accountNo);
 		Optional<Account> findById = accountRepository.findById(accountNo);
-		
-		log.info("getting account details{}",findById.get());
-		
+
+		log.info("getting account details{}", findById.get());
 
 		Integer cid = 0;
-		  if(findById.isPresent()) {
-			  Account account = findById.get();
-			  Customer customer = account.getCustomer();
-			  cid = customer.getCustomerId();
-		  }else {
-			  throw new NoAccountFoundException("no account with accounNo " +accountNo);
-		  }
-		  
-
-		  
-		
+		if (findById.isPresent()) {
+			Account account = findById.get();
+			Customer customer = account.getCustomer();
+			cid = customer.getCustomerId();
+		} else {
+			throw new NoAccountFoundException("no account with accounNo " + accountNo);
+		}
 
 		log.debug("customer id is{}", cid);
-		
-		
-		
+
 		List<Transaction> transactionList = transactionRepository.findTransactionByAccountNo(accountNo);
-		
-		if(transactionList.isEmpty()) {
-			throw new NoAccountFoundException("no account with accounNo " +accountNo);
+
+		if (transactionList.isEmpty()) {
+			throw new NoAccountFoundException("no account with accounNo " + accountNo);
 		}
-		
-		
-		Optional<Mortgage> findByCustomerId =  mortgageRepository.findByCustomerId(cid);
+
+		Optional<Mortgage> findByCustomerId = mortgageRepository.findByCustomerId(cid);
 		Mortgage mortgage = null;
-		if(findByCustomerId.isPresent()) {
+		if (findByCustomerId.isPresent()) {
 			mortgage = findByCustomerId.get();
 		}
-		
-		
+
 		Long mortgageAccountNo = mortgage.getMortgageAccountNo();
-		
-	
-		
-		
+
 		log.debug("getting data from repository {}", transactionList);
-		
-		
-		List<TransactionResponseDto> transactionResponseDto =
-				  transactionList.stream().map(new Function<Transaction,TransactionResponseDto>(){
-					  	
+
+		List<TransactionResponseDto> transactionResponseDto = transactionList.stream()
+				.map(new Function<Transaction, TransactionResponseDto>() {
+
 					@Override
 					public TransactionResponseDto apply(Transaction transaction) {
-						 return new TransactionResponseDto(transaction.getTransactionId(),transaction.getTransactionType(),transaction.getTransactiondate(),transaction.getTransactionAmount(),transaction.getDescription(),transaction.getAccountNo(),mortgageAccountNo);}
-				  }).collect(Collectors.toList());
-				  
+						return new TransactionResponseDto(transaction.getTransactionId(),
+								transaction.getTransactionType(), transaction.getTransactiondate(),
+								transaction.getTransactionAmount(), transaction.getDescription(),
+								transaction.getAccountNo(), mortgageAccountNo);
+					}
+				}).collect(Collectors.toList());
 
-		log.debug("dto conversion done {}",transactionResponseDto);
+		log.debug("dto conversion done {}", transactionResponseDto);
 		return transactionResponseDto;
 	}
 

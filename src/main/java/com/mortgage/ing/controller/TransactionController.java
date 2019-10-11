@@ -15,17 +15,36 @@ import com.mortgage.ing.service.TransactionService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Abhishek is it a TransactionController will return transactionList
+ *         based on customer account no
+ * 
+ *
+ */
 @RestController
 @Slf4j
 public class TransactionController {
 
+	/***
+	 * the TransactionService will call TransactionRepository to get transaction
+	 * List
+	 */
 	@Autowired
 	private TransactionService transactionService;
 
+	/***
+	 * 
+	 * @param accountNo
+	 * @return
+	 * @throws NoAccountFoundException
+	 *             this getTransaction api will fetch transaction details based on
+	 *             given account no 
+	 * 
+	 */
 	@GetMapping(value = "/accounts/{accountNo}/transactions", produces = "application/json")
 	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo") Long accountNo)
 			throws NoAccountFoundException {
-		log.info("getting accountNo{}",accountNo);
+		log.info("getting accountNo{}", accountNo);
 		return new ResponseEntity<List<TransactionResponseDto>>(transactionService.getTransactionByAccountNo(accountNo),
 				HttpStatus.OK);
 	}

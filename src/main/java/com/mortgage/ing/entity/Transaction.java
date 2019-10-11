@@ -20,6 +20,7 @@ import javax.persistence.Table;
 @Table(name = "transaction")
 public class Transaction {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer transactionId;
