@@ -13,15 +13,19 @@ import com.mortgage.ing.dto.TransactionResponseDto;
 import com.mortgage.ing.exception.NoAccountFoundException;
 import com.mortgage.ing.service.TransactionService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class TransactionController {
 
 	@Autowired
 	private TransactionService transactionService;
 
 	@GetMapping(value = "/accounts/{accountNo}/transactions", produces = "application/json")
-	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo") Integer accountNo)
+	public ResponseEntity<List<TransactionResponseDto>> getTransaction(@PathVariable("accountNo") Long accountNo)
 			throws NoAccountFoundException {
+		log.info("getting accountNo{}",accountNo);
 		return new ResponseEntity<List<TransactionResponseDto>>(transactionService.getTransactionByAccountNo(accountNo),
 				HttpStatus.OK);
 	}
